@@ -1,0 +1,36 @@
+# kuber/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: client-services
+  labels:
+    domain: client
+    team: development
+    security-tier: high
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tenant-services
+  labels:
+    domain: tenant
+    team: development
+    security-tier: high
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bi-services
+  labels:
+    domain: bi
+    team: data-engineering
+    security-tier: medium
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: accounting-services
+  labels:
+    domain: accounting
+    team: finance
+    security-tier: high

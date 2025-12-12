@@ -1,4 +1,4 @@
-[slava@altlinux-1 simulate]$ ./simulate-incident.sh
+[slava@altlinux-vm-1 simulate]$ ./simulate-incident.sh
 namespace/secure-ops created
 Context "minikube" modified.
 serviceaccount/monitoring created

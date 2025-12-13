@@ -1,4 +1,4 @@
-## Запуск minikube в Alt Linux с включенным аудитом
+# Запуск minikube в Alt Linux с включенным аудитом
 У нас вариация на тему [официальной инструкции](https://minikube.sigs.k8s.io/docs/tutorials/audit-policy/).
 1. [Установить Docker](https://www.altlinux.org/Docker)
 1. Установить minikube на хосте используя штатные средства.
@@ -40,6 +40,7 @@
    minikube status // все должны быть running
    ```
    
+# Выполняем задание
 1. Запускаем симуляцию активности и ждём, пока отработает
 
     ```
@@ -58,3 +59,11 @@
      cd ./simulate
      kubectl logs kube-apiserver-minikube -n kube-system | grep -Eo '\{.*"kind":"Event".*"audit.k8s.io/v1".*\}' | jq --compact-output '.' > audit_clean.json
      ```
+     
+1. Сканируем логи на наличие подозрительных событий и получаем 
+
+    ```
+   bash scan-audit.sh audit2.json
+   ```
+   
+1. Анализ полученного лога: [analysis.md](analysis.md)

@@ -53,7 +53,7 @@ bash simulate-incident.sh
     
     ## Подозрительные события
     
-    1. Доступ к секретам:
+    1. доступ к secrets:
        - Кто: ...
        - Где: ...
        - Почему подозрительно: ...
@@ -83,15 +83,15 @@ bash simulate-incident.sh
 1. Скрипт фильтрации audit.log, написанный на Bash или Python.
 
 ## Как проверить самостоятельно
-1. Проверка на события доступа к secrets:
+1. Проверка на доступ к secrets:
     ```
     jq 'select(.objectRef.resource=="secrets" and .verb=="get")' audit.log
     ```
-1. Проверка на kubectl exec в чужие поды:
+1. Проверка на kubectl exec в чужом поде:
     ```
     jq 'select(.verb=="create" and .objectRef.subresource=="exec")' audit.log
     ```
-1. Привилегированные поды:
+1. Проверка на привилегированные поды:
     ```
     jq 'select(.objectRef.resource=="pods" and .requestObject.spec.containers[].securityContext.privileged==true)' audit.log
     ```

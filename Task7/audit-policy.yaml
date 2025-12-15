@@ -1,0 +1,15 @@
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+  - level: Metadata
+    resources:
+      - group: ""
+        resources: ["pods"]
+    namespaces: ["audit-zone"]
+
+  - level: RequestResponse
+    resources:
+      - group: ""
+        resources: ["pods"]
+    namespaces: ["audit-zone"]
+    verbs: ["create", "update

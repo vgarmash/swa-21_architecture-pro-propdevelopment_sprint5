@@ -1,0 +1,121 @@
+# kuber/role-binding.yaml
+---
+# DevOps Engineer получает полный доступ ко всему кластеру
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: devops-cluster-admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin-propdev
+subjects:
+  - kind: ServiceAccount
+    name: devops-engineer
+    namespace: default
+---
+# Security Auditor получает права чтения всего кластера
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: security-auditor-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: security-auditor
+subjects:
+  - kind: ServiceAccount
+    name: security-auditor
+    namespace: default
+---
+# Business Viewer получает права просмотра всех namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: business-viewer-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: namespace-viewer
+subjects:
+  - kind: ServiceAccount
+    name: viewer-business
+    namespace: default
+---
+# Developer Client получает права в client-services
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-client-binding
+  namespace: client-services
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: developer-client
+subjects:
+  - kind: ServiceAccount
+    name: developer-client
+    namespace: default
+---
+# Developer Tenant получает права в tenant-services
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-tenant-binding
+  namespace: tenant-services
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: developer-tenant
+subjects:
+  - kind: ServiceAccount
+    name: developer-tenant
+    namespace: default
+---
+# Data Analyst получает права в bi-services
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: data-analyst-binding
+  namespace: bi-services
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: bi-analyst
+subjects:
+  - kind: ServiceAccount
+    name: data-analyst
+    namespace: default
+---
+# Business Viewer получает права просмотра в accounting-services
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: business-accounting-viewer
+  namespace: accounting-services
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: accounting-viewer
+subjects:
+  - kind: ServiceAccount
+    name: viewer-business
+    namespace: default
+---
+# Все разработчики получают базовые права просмотра
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developers-pod-viewer
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pod-viewer
+subjects:
+  - kind: ServiceAccount
+    name: developer-client
+    namespace: default
+  - kind: ServiceAccount
+    name: developer-tenant
+    namespace: default

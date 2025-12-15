@@ -1,0 +1,100 @@
+# kuber/role.yaml
+---
+# ClusterRole: cluster-admin (для DevOps)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-admin-propdev
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+  - nonResourceURLs: ["*"]
+    verbs: ["*"]
+---
+# ClusterRole: security-auditor (чтение всех ресурсов)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: security-auditor
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+---
+# ClusterRole: namespace-viewer (просмотр любого namespace)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: namespace-viewer
+rules:
+  - apiGroups: ["", "apps", "batch", "extensions"]
+    resources: ["pods", "deployments", "services", "configmaps", "jobs", "cronjobs"]
+    verbs: ["get", "list", "watch"]
+---
+# Role: developer-client (полные права в client-services)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer-client
+  namespace: client-services
+rules:
+  - apiGroups: ["", "apps", "batch"]
+    resources: ["pods", "deployments", "services", "configmaps", "secrets", "persistentvolumeclaims", "jobs"]
+    verbs: ["*"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["*"]
+---
+# Role: developer-tenant (полные права в tenant-services)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer-tenant
+  namespace: tenant-services
+rules:
+  - apiGroups: ["", "apps", "batch"]
+    resources: ["pods", "deployments", "services", "configmaps", "secrets", "persistentvolumeclaims", "jobs"]
+    verbs: ["*"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["*"]
+---
+# Role: bi-analyst (ограниченные права в bi-services)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: bi-analyst
+  namespace: bi-services
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "configmaps", "persistentvolumeclaims"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets"]
+    verbs: ["get", "list", "watch"]
+---
+# Role: accounting-viewer (только чтение в accounting-services)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: accounting-viewer
+  namespace: accounting-services
+rules:
+  - apiGroups: ["", "apps"]
+    resources: ["pods", "deployments", "services", "configmaps"]
+    verbs: ["get", "list", "watch"]
+---
+# Role: pod-viewer (базовая роль просмотра)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-viewer
+  namespace: default
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]

@@ -1,0 +1,59 @@
+# kuber/users.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: devops-engineer
+  namespace: default
+  labels:
+    user-type: human
+    department: devops
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: developer-client
+  namespace: default
+  labels:
+    user-type: human
+    department: development
+    domain: client
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: developer-tenant
+  namespace: default
+  labels:
+    user-type: human
+    department: development
+    domain: tenant
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: viewer-business
+  namespace: default
+  labels:
+    user-type: human
+    department: business
+    role: viewer
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: security-auditor
+  namespace: default
+  labels:
+    user-type: human
+    department: security
+    role: auditor
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: data-analyst
+  namespace: default
+  labels:
+    user-type: human
+    department: data
+    role: analyst
